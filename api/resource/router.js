@@ -1,6 +1,8 @@
 // Imports
 const router = require('express').Router()
 const Resources = require('./model')
+const mw = require('../middleware/middleware')
+
 
 // Endpoints
 router.get('/', async (req, res, next) => {
@@ -13,7 +15,7 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', mw.checkResourcePayload, async (req, res, next) => {
     try {
         const resource = await Resources.addResource(req.body)
         res.status(201).json(resource)
@@ -22,6 +24,7 @@ router.post('/', async (req, res, next) => {
         next(err)
     }
 })
+
 
 // Exports
 module.exports = router

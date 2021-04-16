@@ -40,5 +40,6 @@ async function addTask(task) {
 // Exports
 module.exports = {
     getTasks,
+    getTaskById,
     addTask
 }

@@ -1,6 +1,8 @@
 // Imports
 const router = require('express').Router()
 const Projects = require('./model')
+const mw = require('../middleware/middleware')
+
 
 // Endpoints
 router.get('/', async (req, res, next) => {
@@ -14,7 +16,7 @@ router.get('/', async (req, res, next) => {
 
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', mw.checkProjectPayload, async (req, res, next) => {
     try {
         const project = await Projects.addProject(req.body)
         res.status(201).json(project)
@@ -23,6 +25,7 @@ router.post('/', async (req, res, next) => {
         next(err)
     }
 })
+
 
 // Exports
 module.exports = router

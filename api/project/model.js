@@ -13,22 +13,21 @@ async function getProjects() {
 }
 
 async function getProjectById(project_id) {
-    const project = await db('projects')
-        .where({ project_id })
-        .first()
+    return db('projects').where({ project_id }).first()
+}
+
+async function addProject(project) {
+    const [ project_id ] = await db('projects').insert(project)
+    project = await getProjectById(project_id)
     return Promise.resolve({
         ...project, 
         project_completed: Boolean(project.project_completed)
     })
 }
 
-async function addProject(project) {
-    const [ project_id ] = await db('projects').insert(project)
-    return getProjectById(project_id)
-}
-
 // Exports
 module.exports = {
     getProjects,
+    getProjectById,
     addProject
 }
