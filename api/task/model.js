@@ -37,9 +37,27 @@ async function addTask(task) {
     return getTaskById(task_id)
 }
 
+async function getTasksByProjectId(project_id) {
+    const tasks = await db('tasks')
+        .select(
+            'task_id', 
+            'task_description', 
+            'task_notes', 
+            'task_completed'
+        )
+        .where({ project_id })
+    return Promise.resolve(
+        tasks.map(task => ({
+            ...task,
+            task_completed: Boolean(task.task_completed)
+        }))
+    )
+}
+
 // Exports
 module.exports = {
     getTasks,
     getTaskById,
-    addTask
+    addTask,
+    getTasksByProjectId
 }

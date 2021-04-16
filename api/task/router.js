@@ -1,7 +1,7 @@
 // Imports
 const router = require('express').Router()
 const Tasks = require('./model')
-const mw = require('../middleware/middleware')
+const mw = require('./middleware')
 
 
 // Endpoints

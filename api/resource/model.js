@@ -19,10 +19,19 @@ async function addResource(resource) {
     return getResourceById(resource_id)
 }
 
+async function getResourcesByProjectId(project_id) {
+    return db('resources as r')
+        .join('project_resources as pr', 'r.resource_id', 'pr.resource_id')
+        .join('projects as p', 'pr.project_id', 'p.project_id')
+        .select('r.*')
+        .where('p.project_id', project_id)
+}
+
 // Exports
 module.exports = {
     getResources,
     getResourceById,
     getResourceByName,
-    addResource
+    addResource,
+    getResourcesByProjectId
 }
